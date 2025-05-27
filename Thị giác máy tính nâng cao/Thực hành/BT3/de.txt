@@ -1,0 +1,9 @@
+Dataset CUB là một trong những datatset phổ biến cho bài toán Object Localization.
+
+Dựa trên dataset sau, các em hạy xây dựng mô hình mạng học sâu để thực hiện bài toán này.
+
+https://www.kaggle.com/datasets/wenewone/cub2002011
+
+Sinh viên nên làm trước ở nhà, hoặc download datatset trước nhé.
+
+Chúc các em thành công

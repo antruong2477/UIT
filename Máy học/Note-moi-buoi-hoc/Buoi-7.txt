@@ -1,0 +1,48 @@
+Ngày 08/4/2024
+
+Tìm hiểu về Dataset:
+    Training set:   
+        Training set :80%
+        Validation :20% được sử dụng trong quá trình phát triển mô hình để xác định các tham số tốt nhất
+            K fold CV (Cross Validation): Dữ liệu được chia thành K phần (folds), và mỗi phần sẽ lần lượt được sử dụng làm tập kiểm tra, trong khi các phần còn lại được sử dụng để huấn luyện mô hình. Quá trình này được lặp lại K lần, với mỗi lần mô hình được đánh giá trên một tập kiểm tra khác nhau. Sau khi hoàn thành, hiệu suất của mô hình được tính trung bình trên tất cả các fold.
+
+    Test set: public test vs private test
+
+Model:
+    Training Data -> ML Algorithm -> Model  
+    Test data -> Model -> Output
+
+
+Ví dụ: Regission
+    Input: Diện tích nhà
+    Output: Giá nhà (1 số thực)
+
+    ML -> Training data (dựa trên experience) -> (train) model -> (predict)
+
+    Training set: feature + target
+        => Learning Algorithm
+            => f: function
+            x(feature) -> f (model) -> y^ (prediction)
+	Training data:
+    Model: f(x) = wx + b = y^ : model là những đường thẳng, vậy chọn đường thẳng nào ?
+        w,b: parameters
+
+	Cost function: cho biết mức độ sai số giữa giá trị dự đoán từ mô hình và giá trị thực tế từ dữ liệu huấn luyện
+
+    Tìm đường thẳng với tiêu chí hàm J(w,b) : cost cho mỗi (w,b):
+        Chọn (w,b) sao cho J(w,b) nhỏ nhất => tìm cực trị
+
+    => Gradient Desent:
+        - Hướng đi => đạo hàm, dấu đạo hàm (derivative)
+        - Độ lớn: lớn, nhỏ => Learning rate
+        - Điều kiện dừng: epoch
+        
+
+	Gradient Desent: 
+	Hàm J(w)
+	Khởi tạo tham số: chọn w bất kỳ
+	Cập nhật w	cho hướng về cực tiểu: -> đạo hàm
+			độ lớn: - learningrate * giá trị đạo hàm  (−ηf′(w))
+	Lặp cho đến khi: hội tụ : |J(w1) - J(w2)| < e 
+
+

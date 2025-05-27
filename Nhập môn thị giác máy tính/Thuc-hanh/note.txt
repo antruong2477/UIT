@@ -1,0 +1,6 @@
+https://pillow.readthedocs.io/en/stable/handbook/tutorial.html
+https://pillow.readthedocs.io/en/stable/reference/index.html
+
+https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html
+
+

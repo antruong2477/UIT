@@ -1,0 +1,44 @@
+Ngày 01/4/2024
+
+- Thực hành Lab 1
+- Các vấn đề đã được trình bày:
+Trình bày các vấn đề liên quan đến "Machine Learning WorkFlow" - quá trình xây dựng một ứng dụng máy học. 
+Quá trình này bao gồm 7 bước cơ bản:
+1. Thu thập data (Gathering data):
+     - Thu thập dữ liệu từ các nguồn, các cách khác nhau và phải được xác minh nguồn gốc, làm sạch để loại bỏ các dữ liệu nhiễu và tăng tính nhất quán của dữ liệu.
+     - Quá trình này phải đảm bảo có được sự đa dạng trong dữ liệu (variations) để bao phủ hết tất cả các loại và các điều kiện khác.
+     Ví dụ như xe Honda có SH, AB, Wave alpha, Future,...
+        trong đó ảnh chụp SH thì có màu sắc, góc nhìn, người ngồi, ánh sáng,...
+        Phải mô tả được các tình huống thực tế, bổ sung nhiều dữ liệu để giảm thiểu sự nhầm lẫn (Confusion)
+
+2. Tiền xử lý dữ liệu (Preparation data):
+     - Quá trình này bao gồm việc chuẩn hóa, loại bỏ những giá trị thiếu, xử lý các ngoại lệ và chuyển đổi dữ liệu về định dạng phù hợp.
+     - Các công việc trên giúp cho mô hình học được dữ liệu chính xác và hiệu quả.
+Ví dụ: Trong bài toán đếm số xe hiệu Honda trong 1 bãi giữ xe. Quá trình thu thập dữ liệu cho bài toán này bao gồm việc thu thập các hình ảnh loại xe không phải hiệu Honda và các hình ảnh xe hiệu Honda ở các dòng xe, màu sắc, góc độ camera, số người ngồi trên xe, ánh sáng,... và gán nhãn đúng cho dữ liệu huấn luyện.
+
+3. Lựa chọn mô hình (Choosing a model)
+     - Lựa chọn một mô hình phù hợp với bài toán cụ thể, dựa trên dữ liệu và yêu cầu của bài toán.
+     - Coi cái mạnh, yếu của model, tìm những nguyên lý chung
+     - Ví dụ: một bài toán phân loại thì sẽ bao gồm rất nhiều mô hình có thể sử dụng như: Random Forest, LogisticRegression, SVM, DL, NeuralNetwork,... Vậy cần lựa chọn mô hình như thế nào cho phù hợp với điều kiện tài nguyên nhưng vẫn đảm bảo cho hiệu suất tính toán và độ chính xác cao nhất có thể.
+
+4. Huấn luyện mô hình (Training model)
+    - Sử dụng dữ liệu để điều chỉnh các tham số để mô hình có khả năng dự đoán chính xác.
+    - Quá trình này thường tiêu tốn khá nhiều tài nguyên, tùy thuộc vào mô hình đã được lựa chọn để sử dụng.
+5. Đánh giá mô hình (Evaluation)
+    - Đánh giá hiệu suất của mô hình trên tập dữ liệu kiểm tra.
+    - Tùy thuộc vào từng yêu cầu mà có thể sử dụng các độ đo (metric) khác nhau.
+6. Tinh chỉnh các siêu tham số (Hyper Parameter Finetuning)
+    - Dựa trên kết quả của quá trình đánh giá mô hình, ta sẽ tiếp tục tinh chỉnh các siêu tham số hoặc kiến trúc mô hình để cải thiện hiệu suất.
+    - Ví dụ cho một siêu tham số: learning rate (tốc độ học),...
+7. Dự đoán (Prediction)
+    - Sau khi có được một mô hình hoàn chỉnh thì sẽ cho mô hình dự đoán với các giá trị mới trong thực tế.
+Tóm lại, trên đây là 7 bước cơ bản trong quá trình xây dựng một ứng dụng máy học. Tuy nhiên, trong thực tế, các bước có thể nhiều hơn hoặc ít hơn tùy vào độ phức tạp của ứng dụng.
+
+Tư duy ML: Để máy học thì cần data để tìm các rules
+
+Các kỹ năng đã được hướng dẫn: 
+    - Kỹ năng mô hình hóa bài toán thực tế về một bài toán máy học.
+    - Kỹ năng xây dựng một bộ test về bài toán nhận diện số viết tay và đăng tải lên github
+Các kỹ năng mới:
+    - Kỹ năng sử dụng github
+    - Kỹ năng mô hình hóa bài toán thực tế, áp dụng máy học vào một bài toán thực tế.

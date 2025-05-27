@@ -1,0 +1,19 @@
+1. Sử dung tập dữ liệu train và test từ trang web:
+
+https://github.com/metinmertakcay/Color_Classification_using_Color_Descriptors
+
+2. Cho biết kết quả khi áp dụng phương pháp KNN (với k=1, k=5) 
+
+3. Sử dụng ít nhất 4 loại đặc trưng về màu sắc:  
+
+Histogram; Color moments; CDC; CCV
+
+4. Với 4 độ đo: Euclidean, Correlation, Chi-square, Intersection, Bhattacharyya
+
+---
+
+Lưu ý: 
+
+Nhớ chuyển các vector đặc trưng thành vector đơn vị
+
+Các em chỉ nộp file *.py, trong file nhớ ghi chú thông tin  MSSV và họ tên của mình nhé
