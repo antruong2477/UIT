@@ -25,7 +25,6 @@ Mục tiêu là xây dựng một hệ thống tài liệu rõ ràng, có tổ c
 
 ## 📎 Liên kết ngoài
 
-- [Trang Facebook cá nhân](https://www.facebook.com/antruong2477)
 - [Trang GitHub](https://github.com/antruong2477)
 
 ---
