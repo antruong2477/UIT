@@ -1,0 +1,10 @@
+4/2/2024
+
+Thầy Duy đưa ra một số câu hỏi tự tìm hiểu
+- Machine Learning là gì, cho ví dụ và phản ví dụ
+- Phân loại các thuật toán
+- Phân biệt traditional programming với Machine Learning
+
+Bài học mới trong buổi học:
+- Làm việc dựa trên dữ liệu, dựa trên dẫn chứng, thông tin xác thực
+- Khi tiếp nhận được thông tin, cần phải xem xét độ tin cậy của thông tin đấy

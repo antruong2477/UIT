@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing Algorithms</title>
+    <link rel="stylesheet" href="style/main.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>    
+                <label for="algorithm">Choose Algorithm:</label>
+                <select id="algorithm">
+                    <option value="dda">DDA Algorithm</option>
+                    <option value="bresenham">Bresenham Algorithm</option>
+                    <option value="midpoint">Midpoint Circle</option>
+                    <option value="ellipse">Ellipse Drawing</option>
+                </select>
+                <label for="drawMode">Use</label>
+                <select id="drawMode">
+                    <option value="mouse">Mouse</option>
+                    <option value="keyboard">Keyboard</option>
+                </select>
+
+                <div id="keyboardHint" class="hint">Dùng các mũi tên để di chuyển và nhấn Enter để chọn vị trị trí đầu/cuối</div>
+
+
+                <button id="reset">Reset</button>
+            </div>
+            <h5>22520033</h5>
+        </div>   
+        <canvas id="canvas" width="1200" height="600"></canvas>
+    </div>
+</body>
+
+<script type="module" src="src/main.js"></script>
+
+</html>

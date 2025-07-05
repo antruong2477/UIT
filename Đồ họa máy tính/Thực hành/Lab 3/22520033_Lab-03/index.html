@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài tập 3 - Đường cong</title>
+  <link rel="stylesheet" href="webgl-tutorials.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f6;
+      margin: 0; padding: 0;
+    }
+    h1 { text-align: center; margin: 40px 0; color: #333; }
+    .container {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+    }
+    .canvas-container, .control-panel {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    .canvas-container { width: 65%; }
+    canvas {
+      width: 100%; height: 500px;
+      border: 1px solid #ddd; border-radius: 10px;
+    }
+    .control-panel { width: 30%; }
+    .tab-container {
+      display: flex; justify-content: space-around; margin-bottom: 15px;
+    }
+    .tab {
+      padding: 12px 20px; cursor: pointer;
+      background: #f5f5f5; border-radius: 8px;
+      transition: background 0.3s;
+    }
+    .tab:hover { background: #ddd; }
+    .tab.active {
+      background: #f0f0f0; font-weight: bold;
+      border-bottom: 3px solid #007bff;
+    }
+    .tab-content {
+      display: none; padding: 15px; background: #fff; border-radius: 8px;
+    }
+    .tab-content.active { display: block; }
+
+    input, textarea, button {
+      width: 100%; padding: 8px; margin-top: 5px;
+      border: 1px solid #ccc; border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: #007bff; color: white;
+      border: none; cursor: pointer; font-size: 16px;
+    }
+
+    button:hover { background: #0056b3; }
+
+    label { font-size: 14px; display: block; margin-bottom: 5px; }
+
+    #bezier fieldset {
+      border: 2px solid  #4c74af; 
+      border-radius: 8px; /* Bo góc */
+      padding: 12px; /* Nới rộng */
+      background-color: #f9f9f9; /* Nền sáng */
+    }
+  
+    #bezier legend {
+        font-weight: bold;
+        font-size: 1.1em; /* Chữ to hơn */
+        color: #4c74af;
+    }
+    
+    #bezier textarea {
+        width: 100%; /* Giãn full */
+        height: 130px; /* Tăng chiều cao */
+        padding: 10px; /* Nới rộng */
+        font-size: 1.1em; /* Chữ to hơn */
+        border-radius: 6px; /* Bo góc nhẹ */
+        border: 1px solid #ccc; /* Viền mềm mại */
+        background-color: #fff; /* Nền trắng */
+        resize: vertical; /* Cho phép kéo giãn */
+    }
+    
+    #draw-bezier {
+        margin-top: 8px;
+        padding: 8px 12px;
+        font-size: 1.1em; /* Tăng size nút */
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 10px; /* Khoảng cách giữa các phần tử */
+      margin-bottom: 10px;
+    }
+    
+    .input-group label {
+      min-width: 60px; /* Đảm bảo nhãn có cùng độ rộng */
+      text-align: right;
+      font-weight: bold;
+    }
+    
+    .input-group input {
+      flex: 1; /* Giãn hết phần còn lại của dòng */
+    }
+    
+  </style>
+</head>
+<body>
+  <h1>22520033</h1>
+  <div class="container">
+    <div class="canvas-container">
+      <canvas id="canvas"></canvas>
+    </div>
+    <div class="control-panel">
+      <div class="tab-container">
+        <div class="tab active" data-tab="function">Hàm số</div>
+        <div class="tab" data-tab="bezier">Bezier</div>
+        <div class="tab" data-tab="hermit">Hermit</div>
+        <div class="tab" data-tab="flower">Vẽ hoa</div>
+      </div>
+
+      <div id="function" class="tab-content active">
+        <h3>1. Vẽ đồ thị hàm số y = f(x)</h3>
+        <div class="input-group">
+            <label for="func-expression">f(x) =</label>
+            <input type="text" id="func-expression" value="cos(x)">
+        </div>
+        <div class="input-group">
+            <label>Min:</label>
+            <input type="number" id="range-min" value="-5" step="0.5">
+            <label>Max:</label>
+            <input type="number" id="range-max" value="5" step="0.5">
+        </div>
+        <button id="draw-function">Vẽ đồ thị</button>
+      </div>
+      
+      <div id="bezier" class="tab-content">
+        <h3>2. Đường cong Bezier</h3>
+        <fieldset>
+            <legend>Nhập các điểm điều khiển</legend>
+            <label for="bezier-points">Danh sách (x,y):</label>
+            <textarea id="bezier-points" rows="4">2,3&#10;4,1&#10;6,7</textarea>
+        </fieldset>
+        <button id="draw-bezier">Vẽ đường cong</button>
+      </div>
+    
+      <div id="hermit" class="tab-content">
+        <h3>3. Đường cong Hermit</h3>
+        <div class="input-group">
+            <label>Điểm 1 (x,y):</label>
+            <input type="number" id="p1-x" value="1" step="0.5">
+            <input type="number" id="p1-y" value="2" step="0.5">
+        </div>
+        <div class="input-group">
+            <label>Điểm 2 (x,y):</label>
+            <input type="number" id="p2-x" value="6" step="0.5">
+            <input type="number" id="p2-y" value="3" step="0.5">
+        </div>
+        <div class="input-group">
+            <label>Vector 1 (x,y):</label>
+            <input type="number" id="v1-x" value="2" step="0.5">
+            <input type="number" id="v1-y" value="1" step="0.5">
+        </div>
+        <div class="input-group">
+            <label>Vector 2 (x,y):</label>
+            <input type="number" id="v2-x" value="1.5" step="0.5">
+            <input type="number" id="v2-y" value="-1" step="0.5">
+        </div>
+        <button id="draw-hermit">Vẽ đường cong</button>
+      </div>
+    
+      <div id="flower" class="tab-content">
+        <h3>4. Vẽ hoa</h3>
+        <label for="petal-count">Số cánh hoa:</label>
+        <input type="number" id="petal-count" value="7" min="1" max="20">
+        <button id="draw-flower">Vẽ cánh hoa</button>
+      </div>
+
+    </div>
+  </div>
+  <script src="webgl-utils.js"></script>
+  <script src="webgl-lessons-ui.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

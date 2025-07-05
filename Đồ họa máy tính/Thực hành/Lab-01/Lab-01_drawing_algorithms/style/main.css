@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #e7f6f8;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.container {
+    max-width: 1200px;
+    background: rgb(201, 232, 239);
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(112, 13, 13, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 1.2em;
+} 
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.header h5 {
+    background-color: #52a5e9;
+    color: rgb(0, 0, 0);
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin: 0;
+    font-size: 1em;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+select, button {
+    font-size: 1em;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: none;
+    background-color: #a8d0f3;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: 0.3s;
+    align-items: center;
+    text-align: center;
+}
+
+button:hover, select:hover {
+    background-color: #40a5f7;
+}
+
+canvas {
+    background: rgb(238, 247, 251);
+    border: 1px solid black;
+    border-radius: 20px;
+    margin-top: 5px;
+}
+
+.hint {
+    display: none;
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background: rgba(2, 204, 250, 0.7);
+    color: rgb(0, 0, 0);
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 1em;
+    text-align: center;
+    z-index: 1000;
+}

@@ -1,0 +1,112 @@
+/* Đặt lại phong cách mặc định */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arial", sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #eef2f3, #d9e4f5);
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px; /* Để tránh trường hợp canvas quá to bị cắt */
+    overflow: auto; /* Đảm bảo không bị tràn màn hình */
+}
+
+/* Container chính */
+.container {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 850px; /* Tăng kích thước container để vừa canvas */
+}
+
+/* Tiêu đề */
+.heading .title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #1a73e8;
+}
+
+.heading .author {
+    font-size: 16px;
+    color: #555;
+    margin-top: 5px;
+}
+
+.hint {
+    font-size: 14px;
+    color: #777;
+    margin: 10px 0;
+}
+
+/* Canvas */
+.main_container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+canvas {
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 800px; 
+    height: 600px; 
+}
+
+/* Button & Select */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+button, select {
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+}
+
+/* Nút reset */
+#reset {
+    background: #ff4d4d;
+    color: white;
+}
+
+#reset:hover {
+    background: #cc0000;
+}
+
+/* Nút vẽ Ellipse */
+#drawEllipse {
+    background: #4caf50;
+    color: white;
+}
+
+#drawEllipse:hover {
+    background: #388e3c;
+}
+
+/* Select Box */
+#algorithmSelect {
+    background: #f8f9fa;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+#algorithmSelect:hover {
+    background: #e3e3e3;
+}

@@ -1,0 +1,2 @@
+Thực hành, chạy code và kiểm tra xem code có hiệu quả không
+Làm bài tập về nhà: debug code

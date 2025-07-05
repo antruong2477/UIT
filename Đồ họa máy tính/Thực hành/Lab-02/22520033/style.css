@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+canvas {
+    border: 2px solid black;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-right: 20px;
+}
+
+#controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.control-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.control-row label {
+    width: 70px;
+    text-align: right;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 6px;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: rgb(219, 125, 178);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.control-row span {
+    width: 40px;
+    text-align: left;
+    font-weight: bold;
+    color: #333;
+}
+
+#objectSelect {
+    width: 50%;
+    padding: 8px;
+    font-size: 14px;
+    border: 2px solid #6da0b6;
+    border-radius: 5px;
+    background-color: white;
+    color: #02142b;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* #objectSelect:hover {
+    border-color: #7a0b18;
+}
+
+#objectSelect:focus {
+    outline: none;
+    border-color: #00364ddf;
+    box-shadow: 0 0 5px rgba(13, 97, 133, 0.5);
+} */
+
+#autoMove {
+    background-color: #6da0b6;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    margin-top: 10px;
+}
+
+#autoMove:hover {
+    background-color: #0d6185;
+}
+
+#autoRotate {
+    background-color: #6da0b6;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    margin-top: 10px;
+}
+
+#autoRotate:hover {
+    background-color: #0d6185;
+}
+
+
+#reset {
+    background-color: #ff8888;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    margin-top: 10px;
+}
+
+#reset:hover {
+    background-color: #cc0000;
+}

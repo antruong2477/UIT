@@ -1,0 +1,23 @@
+
+Note buổi học 03 (11/3/2024):
+Thực hành:
+- Ôn lại cách tự tạo testcase, cách đo thời gian,
+- Giải đáp một số bài tập wecode
+
+Lý thuyết:
+- Cách nhận biết bài toán nên dùng Machine Learning, tại sao?
+- Traditional programming với Machine Learning
++ Traditional programming: input + program -> output
+    rules nhiều, khó mô tả
++ Machine Learning: input + ouput -> program
+    rules sẽ được học bởi máy tính -> code các giải thuật.
+...
+
+- Phân nhóm các thuật toán Machine learning:
++ Supervised: Regression , Classfication...
++ Unsupervised: Clustering...
+- Các thuật ngữ : Data set, Input , Output, Label...
+- Các ví dụ về các bài toán trên
+
+Note buổi học 04 (18/3/2024):
+- Làm bài wecode sort và list

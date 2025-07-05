@@ -1,0 +1,11 @@
+26/2/2024
+Nội dung buổi học:
+- Tại sao cần phải học máy học? (tất cả công nghệ tiên tiến hiện nay đều liên quan đến máy học, nhiều cơ hội việc làm, kiến thức, kỹ năng cần thiết,...)
+- Giới thiệu một số khái niệm trong máy học.
+- Cách học: học - hỏi
+- Giải thích đơn giản máy học là gì
+- Thứ tự học: học các khái niệm - học thuật toán - áp dụng để xây dựng những ứng dụng
+- Syllabus, roadmap
+- Cách sử dụng gg colab, jupyter notebook
+- Nguồn học python
+Bên cạnh đó em học được một điều mới đó là cách tư duy khi mình gặp khó khăn trong vấn đề nào đó. Buông bỏ nếu thực sự không cần thiết. Giống như câu nói trong phim Mai "Đâu có ai sống thiếu ai mà chết đâu"

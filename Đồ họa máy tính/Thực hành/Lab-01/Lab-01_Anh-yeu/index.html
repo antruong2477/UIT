@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Drawing Algorithm</title>
+    <link rel="stylesheet" href="./style/main.css" type="text/css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">DDA & Bresenham Algorithm</h1>
+            <h3 class="author">UIT</h3>
+        </div>
+        <p class="hint">Nhấn ESC để hủy vẽ</p>
+
+        <div class="main_container">
+            <canvas id="canvas" width="600" height="600"></canvas>
+        </div>
+
+        <div class="buttons">
+            <button id="reset">Reset</button>
+            <select id="algorithmSelect">
+                <option value="DDA">DDA</option>
+                <option value="Bresenham" selected>Bresenham</option>
+                <option value="Midpoint">Midpoint</option>
+            </select>
+            <button id="drawEllipse">Vẽ Ellipse</button>
+        </div>
+    </div>
+    <script type="module" src="./src/main.js"></script> </body>
+</html>

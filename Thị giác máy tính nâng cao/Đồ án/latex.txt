@@ -1,0 +1,740 @@
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usetheme{SimplePlus}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage{setspace}
+\usepackage{enumerate}
+\usepackage{caption}
+\usepackage[many]{tcolorbox}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\usepackage{ragged2e}
+
+\renewcommand{\arraystretch}{1.5}  % Điều chỉnh chiều cao của dòng trong bảng
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{Swin-SE-ResNet: Nhận diện cảm xúc khuôn mặt}
+
+
+\subtitle{CS338.P22 - Nhận dạng}
+\author{
+    \begin{tabular}{c@{\hspace{3cm}}c}
+        Trương Huỳnh Thúy An & Trương Hồng Anh \\
+        22520033        & 22520084
+    \end{tabular}
+}
+
+
+
+% \subtitle{CS331.P21 - Thị giác máy tính nâng cao}
+% \author{
+%     \begin{tabular}{c@{\hspace{0.8cm}}c@{\hspace{0.5cm}}c}
+%         Trương Huỳnh Thúy An & Hoàng Đức Chung & Nguyễn Hải Đăng
+%     \end{tabular}
+% }
+
+
+
+\institute
+{
+    Khoa Khoa học Máy tính \\
+    Trường Đại học Công nghệ Thông tin, ĐHQG-HCM
+}
+% \date{June 3, 2025} 
+\date{June 4, 2025} 
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Overview}
+    \tableofcontents
+\end{frame}
+
+%------------------------------------------------
+\section{Tổng quan}
+%------------------------------------------------
+
+\begin{frame}{Overview}
+    \tableofcontents[currentsection]
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Giới thiệu bài toán}
+\justifying
+Nhận diện cảm xúc khuôn mặt (Facial Expression Recognition - FER) là một trong những bài toán cốt lõi của thị giác máy tính, với nhiều ứng dụng trong:
+\vspace{0.2em}
+
+\begin{itemize}
+    \item Giao tiếp người – máy (Human-Computer Interaction)
+    \vspace{0.2em}
+
+    \item Phân tích hành vi người dùng (User Behavior Analysis)
+    \vspace{0.2em}
+
+    \item Hệ thống chăm sóc sức khỏe thông minh
+    \vspace{0.2em}
+
+    \item Giám sát và an ninh
+    \vspace{0.2em}
+
+\end{itemize}
+
+Mục tiêu chính của FER là phân loại cảm xúc của con người dựa trên ảnh khuôn mặt, thường bao gồm 7 cảm xúc cơ bản: \textit{Angry, Disgust, Fear, Happy, Neutral, Sad, Surprise}.
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Lý do chọn đề tài}
+\justifying
+Mặc dù các mô hình học sâu hiện đại như CNN, Vision Transformer hay Swin Transformer đã đạt được nhiều thành tựu trong FER, vẫn còn nhiều thách thức tồn tại:
+\vspace{0.2em}
+
+
+\begin{itemize}
+    \item Thiếu khả năng học đặc trưng cục bộ chi tiết — rất quan trọng với FER.
+    \vspace{0.2em}
+
+    \item Dữ liệu không đồng đều và giới hạn về kích thước, dẫn đến overfitting.
+    \vspace{0.2em}
+
+    \item Thiếu tích hợp hiệu quả giữa các mô hình học toàn cục và cục bộ.
+    \vspace{0.2em}
+
+\end{itemize}
+
+Do đó, nhóm chọn nghiên cứu và sử dụng mô hình lai kết hợp Swin Transformer với ResNet và các mô-đun cải tiến như SE để nâng cao hiệu suất nhận diện cảm xúc.
+\end{frame}
+
+%------------------------------------------------
+\section{Các nghiên cứu liên quan}
+%------------------------------------------------
+
+\begin{frame}{Overview}
+    \tableofcontents[currentsection]
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Các nghiên cứu liên quan}
+\begin{columns}
+    \column{0.55\textwidth}
+    \textbf{TransFER (Xue et al. \cite{xue2021})}
+    \begin{itemize}
+        \item Áp dụng Multi-Attention Dropping (MAD).
+        \item Tập trung vào vùng quan trọng.
+        \item Giảm nhiễu không cần thiết.
+    \end{itemize}
+    
+    \textbf{VTFF (Ma et al. \cite{ma2021})}
+    \begin{itemize}
+        \item Kết hợp CNN hai nhánh và Transformer.
+        \item Dùng cơ chế ASF (Attentional Selective Fusion).
+        \item Trích xuất thông tin từ đặc trưng “thị giác”.
+    \end{itemize}
+
+    \column{0.45\textwidth}
+    \textbf{Swin Transformer \cite{liu2021}}
+    \begin{itemize}
+        \item Self-attention theo cửa sổ trượt.
+        \item Khai thác đặc trưng toàn cục và cục bộ.
+        \item Tăng khả năng biểu diễn hình ảnh.
+    \end{itemize}
+
+    \textbf{CT-DBN (Liang et al. \cite{liang2023ctdbn})}
+    \begin{itemize}
+        \item Kết hợp CNN với Swin Transformer.
+        \item Giải quyết che khuất, thay đổi góc nhìn.
+    \end{itemize}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Các nghiên cứu liên quan}
+\begin{columns}
+    \column{0.65\textwidth}
+    \textbf{{SwinT-SE-SAM (Vats \& Chadha \cite{vats2023swinse})}}
+    
+    \textit{Kiến trúc đề xuất}
+    \begin{itemize}
+        \item Swin Transformer + SE block + SAM.
+        \item Tăng hiệu quả nhận diện cảm xúc.
+    \end{itemize}
+
+    \textit{Thực nghiệm}
+    \begin{itemize}
+        \item Dữ liệu: FER2013 (40K), CK+ (1K), AffectNet (60K).
+        \item Tiền xử lý: chuẩn hóa, xoay, thay đổi độ tương phản, augmentation.
+        \item F1-score đạt 0.5420 trên AffectNet (4K ảnh test).
+    \end{itemize}
+    
+    \column{0.35\textwidth}
+    \textbf{Swin-FER (Bie et al. \cite{bie2024swinfer})}
+    
+     \textit{Cải tiến chính}
+    \begin{itemize}
+        \item Hợp nhất đặc trưng giữa các tầng.
+        \item Group Convolution.
+        \item Thêm Mean/Split Module.
+    \end{itemize}
+
+    \textit{Kết quả thực nghiệm}
+    \begin{itemize}
+        \item FER2013: 71.11\% accuracy.
+        \item CK+: 100\% accuracy.
+    \end{itemize}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Đề xuất: Swin-SE-ResNet}
+\begin{columns}
+    \column{0.48\textwidth}
+    \textbf{Kiến trúc}
+    \begin{itemize}
+        \item Swin Transformer + ResNet-50.
+        \item Kết hợp học đặc trưng toàn cục và cục bộ.
+    \end{itemize}
+    \textbf{Tăng cường:}
+    \begin{itemize}
+        \item Squeeze-and-Excitation (SE block).
+    \end{itemize}
+
+    \column{0.48\textwidth}
+    \textbf{Chi tiết kỹ thuật}
+    \begin{itemize}
+        \item Split Convolution và Mean Pooling.
+        \item Giảm nhiễu, giảm tham số dư thừa.
+        \item Huấn luyện trên FER2013 và AffectNet.
+        \item Tăng khả năng khái quát hóa mô hình.
+    \end{itemize}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------
+\section{Phương pháp}
+%------------------------------------------------
+
+\begin{frame}{Overview}
+    \tableofcontents[currentsection]
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Động lực và lý do lựa chọn}
+    \begin{itemize}
+        \item CNN (VGG, ResNet) hiệu quả trong trích xuất đặc trưng cục bộ nhưng bị giới hạn về receptive field.
+        \item Vision Transformer (ViT) khai thác quan hệ toàn cục qua self-attention, nhưng cần dữ liệu lớn và không tối ưu cho đặc trưng cục bộ.
+        \item \textbf{Giải pháp:} Kết hợp Swin Transformer Tiny và ResNet-50 để tận dụng ưu điểm của cả hai.
+        \item \textbf{Tăng cường:} Thêm SE block, Split Convolution và Mean Pooling để tăng khả năng biểu diễn và giảm overfitting.
+    \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Swin Transformer: Cơ chế Attention hiệu quả}
+\begin{itemize}
+    \item \textbf{Swin Transformer \cite{liu2021}} là kiến trúc Vision Transformer phân cấp, tối ưu cho các tác vụ thị giác.
+    \item Sử dụng \textbf{Window-based Multi-head Self-Attention (W-MSA)}:
+    \begin{itemize}
+        \item Chia ảnh thành các cửa sổ kích thước cố định ($M \times M$).
+        \item Attention được tính riêng biệt trong từng cửa sổ $\Rightarrow$ giảm độ phức tạp xuống $\mathcal{O}(M^2 \cdot \frac{N}{M^2})$.
+    \end{itemize}
+    \item \textbf{Shifted Window Multi-head Self-Attention (SW-MSA)}:
+    \begin{itemize}
+        \item Dịch chuyển vị trí các cửa sổ ở tầng kế tiếp.
+        \item Cho phép mô hình hóa thông tin liên vùng mà vẫn giữ hiệu suất tính toán.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Swin Transformer: Kiến trúc phân cấp}
+\begin{itemize}
+    \item Swin Transformer gồm \textbf{4 giai đoạn chính}:
+    \begin{enumerate}
+        \item \textbf{Patch Embedding:} Chuyển ảnh đầu vào thành các patch nhỏ (4×4).
+        \item \textbf{Patch Merging:} Giảm độ phân giải không gian, tăng chiều kênh đặc trưng.
+        \item \textbf{Swin Transformer Block:} Kết hợp W-MSA và SW-MSA.
+        \item \textbf{MLP và Residual Connection:} Giúp học biểu diễn mạnh mẽ và ổn định hơn.
+    \end{enumerate}
+    \item Tạo biểu diễn \textbf{phân cấp} giống như CNN, phù hợp với các bài toán phân loại, phát hiện vật thể, phân đoạn,...
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{swin.png}
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{ResNet-50: Backbone học đặc trưng cục bộ}
+\begin{itemize}
+    \item \textbf{ResNet-50 \cite{he2016deep}} là mạng CNN gồm 50 tầng, sử dụng \textbf{kết nối tắt (Residual Connection)} để tránh mất mát gradient khi huấn luyện sâu.
+    \item Gồm hai loại khối chính:
+    \begin{itemize}
+        \item \textbf{Identity Block}
+        \item \textbf{Convolutional Block}
+    \end{itemize}
+    \item Học tốt đặc trưng cục bộ như mắt, miệng, mũi — những vùng chứa nhiều thông tin biểu cảm.
+    \item Thường được sử dụng như \textbf{backbone trích xuất đặc trưng} trong các mô hình nhận diện biểu cảm khuôn mặt.
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{resnet50.png}
+\end{center}
+\end{frame}
+
+
+%------------------------------------------------
+
+\begin{frame}{SE Block: Squeeze-and-Excitation}
+    \begin{itemize}
+        \item Cơ chế attention theo chiều kênh.
+        \item \textbf{Squeeze:} Global Average Pooling $\Rightarrow z \in \mathbb{R}^C$.
+        \item \textbf{Excitation:} MLP hai lớp $\Rightarrow$ vector trọng số kênh $\mathbf{s}$.
+        \item \textbf{Tái hiệu chỉnh:} $\hat{X}_c = s_c \cdot X_c$.
+    \end{itemize}
+    \begin{center}
+        \includegraphics[width=0.85\linewidth]{seblock.png}
+    \end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Split Convolution và Mean Pooling}
+    \begin{itemize}
+        \item \textbf{Split Convolution:} Chia tensor thành các nhóm kênh, xử lý riêng biệt.
+        \item \textbf{Concat:} Ghép lại thành đầu ra tổng hợp.
+        \item \textbf{Mean Pooling:} Làm mượt không gian đặc trưng, giảm chiều.
+    \end{itemize}
+    \begin{center}
+        \includegraphics[width=0.5\linewidth]{meanpooling.png}
+    \end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Kiến trúc tổng thể Swin-SE-ResNet}
+    \begin{itemize}
+        \item \textbf{Nhánh Swin Transformer:} Trích xuất đặc trưng toàn cục $\rightarrow$ SE Block $\rightarrow$ Split Conv $\rightarrow$ Mean Pooling.
+        \item \textbf{Nhánh ResNet-50:} Trích xuất đặc trưng cục bộ $\rightarrow$ Global Average Pooling.
+        \item \textbf{Kết hợp:} Hai vector đầu ra $\rightarrow$ Fully Connected $\rightarrow$ Softmax:
+        \[
+        \hat{\mathbf{y}} = \text{Softmax}(W \cdot \text{Concat}(\mathbf{f}_{\text{Swin}}, \mathbf{f}_{\text{ResNet}}) + b)
+        \]
+    \end{itemize}
+    \begin{center}
+        \includegraphics[width=0.6\linewidth]{pipeline.png}
+    \end{center}
+\end{frame}
+
+%------------------------------------------------
+\section{Thực nghiệm}
+%------------------------------------------------
+
+\begin{frame}{Overview}
+    \tableofcontents[currentsection]
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Bộ dữ liệu sử dụng}
+\justifying
+\begin{itemize}
+    \item \textbf{FER2013}: 35,887 ảnh xám $48 \times 48$, 7 cảm xúc cơ bản.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.85\textwidth]{fer2013.png}
+    \end{figure}
+
+
+    \item \textbf{AffectNet}: Lấy mẫu 22,244 ảnh màu $96 \times 96$, có gán nhãn thủ công.
+
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.85\textwidth]{affectnet.png}
+    \end{figure}
+    
+\end{itemize}
+
+Cả hai bộ đều bao gồm 7 nhãn: \textit{Angry, Disgust, Fear, Happy, Neutral, Sad, Surprise}.
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{FER2013}
+\justifying
+\textbf{Đặc điểm:}
+\begin{itemize}
+    \item 35,887 ảnh xám $48 \times 48$, thu thập từ môi trường thực.
+    \item Không cân bằng lớp cảm xúc.
+\end{itemize}
+
+\renewcommand{\arraystretch}{1.3}
+\begin{table}[H]
+\centering
+\begin{tabular}{cccccccc}
+\toprule
+\textbf{Nhãn} & \textbf{Angry} & \textbf{Disgust} & \textbf{Fear} & \textbf{Happy} & \textbf{Neutral} & \textbf{Sad} & \textbf{Surprise} \\
+\midrule
+\textbf{Tổng cộng}   & 4953 & 547 & 5121 & 8989 & 6198 & 6077 & 4002 \\
+\bottomrule
+\end{tabular}
+\caption{Phân bố số lượng ảnh theo nhãn cảm xúc trong tập dữ liệu FER2013}
+\label{tab:fer_distribution}
+\end{table}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{AffectNet}
+\justifying
+\textbf{Đặc điểm:}
+\begin{itemize}
+    \item Ảnh màu thu thập từ Internet bằng từ khóa cảm xúc.
+    \item Gán nhãn thủ công cho 7 cảm xúc cơ bản.
+    \item Chọn mẫu gồm 22,244 ảnh kích thước $96 \times 96$.
+\end{itemize}
+
+\renewcommand{\arraystretch}{1.3}
+\begin{table}[H]
+\centering
+\begin{tabular}{cccccccc}
+\toprule
+\textbf{Nhãn} & \textbf{Angry} & \textbf{Disgust} & \textbf{Fear} & \textbf{Happy} & \textbf{Neutral} & \textbf{Sad} & \textbf{Surprise} \\
+\midrule
+\textbf{Tổng cộng}   & 3434 & 3233 & 2961 & 3325 & 2374 & 2793 & 4124 \\
+\bottomrule
+\end{tabular}
+\caption{Phân bố số lượng ảnh theo nhãn cảm xúc trong tập dữ liệu AffectNet}
+\label{tab:fer_distribution_new}
+\end{table}
+
+\end{frame}
+
+%------------------------------------------------
+
+% \begin{frame}{Kết hợp FER2013 và AffectNet}
+% \justifying
+% \textbf{Mục tiêu:} Tăng đa dạng và cân bằng lớp cảm xúc.
+
+% \begin{itemize}
+%     \item Gộp ảnh từ 2 bộ theo từng nhãn.
+%     \item Lọc ảnh lỗi, đồng bộ kích thước, cân bằng lại số lượng.
+%     \item Tổng cộng: \textbf{38,550 ảnh}.
+% \end{itemize}
+
+% \renewcommand{\arraystretch}{1.3}
+% \begin{table}[H]
+% \centering
+% \begin{tabular}{cccccccc}
+% \toprule
+% \textbf{Nhãn} & \textbf{Angry} & \textbf{Disgust} & \textbf{Fear} & \textbf{Happy} & \textbf{Neutral} & \textbf{Sad} & \textbf{Surprise} \\
+% \midrule
+% \textbf{Tổng cộng}   & 5992 & 3900 & 5589 & 5568 & 5894 & 5661 & 5946 \\
+% \bottomrule
+% \end{tabular}
+% \caption{Phân bố số lượng ảnh theo nhãn cảm xúc trong tập dữ liệu kết hợp (FER2013 + AffectNet)}
+% \label{tab:fer_distribution_new}
+% \end{table}
+
+% \end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Tiền xử lý và chia dữ liệu}
+\justifying
+\textbf{Tiền xử lý:}
+\begin{itemize}
+    \item Resize về $224 \times 224$, chuyển tensor.
+    \item Chuẩn hóa theo ImageNet mean/std.
+    \item Augment: lật ngang, xoay, tịnh tiến, làm mờ ảnh
+\end{itemize}
+
+\textbf{Chia tập:} 8:1:1 cho train, validation và test.
+
+\renewcommand{\arraystretch}{1.3}
+\begin{table}[H]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Tập dữ liệu} & \textbf{FER2013} & \textbf{AffectNet} \\
+% & \textbf{FER + AffectNet} \\
+\midrule
+\textbf{Train}      & 31,709 & 17,793\\
+% & 31,671  \\
+\textbf{Validation} & 3,589  & 2,202 \\
+% & 3,379   \\
+\textbf{Test}       & 3,589  & 2,229  \\
+% & 3,500   \\
+\textbf{Tổng cộng}  & 38,887 & 22,224 \\
+% & 38,550  \\
+\bottomrule
+\end{tabular}
+\caption{Tổng hợp số lượng ảnh theo từng tập giữa các bộ dữ liệu}
+\label{tab:dataset_split_comparison}
+\end{table}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Huấn luyện trên FER2013}
+\begin{itemize}
+    \item \textbf{Train:} Loss = 0.1230, Acc = 95.88\%
+    \item \textbf{Val:} Loss = 1.3988, Acc = 70.08\%, F1 = 70.01\%
+    \item \textbf{Test:} Acc = 71.64\%, F1 = 71.71\%
+\end{itemize}
+\begin{figure}
+    \includegraphics[width=0.8\textwidth]{training_history_fer2013.png}
+    \caption{Quá trình huấn luyện trên FER2013}
+\end{figure}
+\end{frame}
+
+%--------------------------------------------------
+
+\begin{frame}{Confusion Matrix - FER2013}
+\begin{figure}
+    \includegraphics[width=0.6\textwidth]{confusion_matrix_fer2013.png}
+    \caption{Confusion Matrix trên tập kiểm tra}
+\end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Huấn luyện trên AffectNet}
+\begin{itemize}
+    \item \textbf{Train:} Loss = 0.0578, Acc = 98.04\%
+    \item \textbf{Val:} Loss = 0.9684, Acc = 75.79\%, F1 = 75.76\%
+    \item \textbf{Test:} Acc = 76.72\%, F1 = 76.81\%
+\end{itemize}
+\begin{figure}
+    \includegraphics[width=0.85\textwidth]{training_history_affectnet.png}
+    \caption{Quá trình huấn luyện trên AffectNet}
+\end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Confusion Matrix - AffectNet}
+\begin{figure}
+    \includegraphics[width=0.6\textwidth]{confusion_matrix_affectnet.png}
+    \caption{Confusion Matrix trên tập kiểm tra}
+\end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+% \begin{frame}{Huấn luyện trên FER2013 \& AffectNet}
+% \begin{itemize}
+%     \item \textbf{Train:} Loss = 0.0995, Acc = 96.56\%
+%     \item \textbf{Val:} Loss = 1.2269, Acc = 71.86\%, F1 = 71.78\%
+%     \item \textbf{Test:} Acc = 73.26\%, F1 = 73.24\%
+% \end{itemize}
+% \begin{figure}
+%     \includegraphics[width=0.85\textwidth]{training_history_fer2013_and_affectnet.png}
+%     \caption{Quá trình huấn luyện trên FER2013 + AffectNet}
+%     \label{fig:combined_training}
+% \end{figure}
+% \end{frame}
+
+%------------------------------------------------
+
+% \begin{frame}{Confusion Matrix - FER2013 \& AffectNet}
+% \begin{figure}
+%     \includegraphics[width=0.6\textwidth]{confusion_matrix_fer2013_and_affectnet.png}
+%     \caption{Confusion Matrix trên tập kiểm tra}
+% \end{figure}
+% \end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{So sánh hiệu suất với các mô hình khác trên FER2013}
+\vspace{0.5em}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lc}
+\toprule
+\textbf{Mô hình} & \textbf{Accuracy} \\
+\midrule
+CNN using the Adamax optimizer~\cite{alamsyah2020} & 66.00\% \\
+VGG16+SEBlock~\cite{nie2022} & 66.80\% \\
+Swin-FER~\cite{bie2024swinfer} & 71.11\% \\
+\textbf{Swin-SE-ResNet (Ours)} & \textbf{71.64\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+
+%------------------------------------------------
+
+% \begin{frame}{So sánh hiệu suất với các mô hình khác trên AffectNet}
+
+% \vspace{0.5em}
+
+% \begin{table}[H]
+% \centering
+% \begin{tabular}{lcc}
+% \toprule
+% \textbf{Mô hình} & \textbf{Accuracy} & \textbf{F1-score (Weighted Avg.)} \\
+% \midrule
+% VGG16 & 69.72\% & 69.71\% \\
+% ResNet50 & 75.06\% & 74.98\% \\
+% \textbf{Swin-SE-ResNet (Ours)} & \textbf{76.72\%} & \textbf{76.81\%} \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
+% \end{frame}
+
+%------------------------------------------------
+\section{Kết luận}
+%------------------------------------------------
+
+\begin{frame}{Overview}
+    \tableofcontents[currentsection]
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Kết luận}
+ 
+\begin{itemize}
+    \item \textbf{Swin-SE-ResNet} đạt kết quả tốt trên 2 tập dữ liệu, cao nhất trên \textbf{AffectNet:} Accuracy 76.72\%.
+    \vspace{0.2em}
+    
+    \item Hiệu quả từ việc tích hợp Swin + SE-block + ResNet: trích xuất đặc trưng mạnh mẽ, tập trung vào vùng thông tin quan trọng
+    \vspace{0.2em}
+    
+
+    \item Mô hình hoạt động khá tốt trong môi trường thực tế:
+    \vspace{0.2em}
+    
+    \begin{itemize}
+        \item Ổn định với dữ liệu liên tục
+        \vspace{0.2em}
+        \item Thích nghi với ánh sáng và đầu vào phức tạp
+        \vspace{0.2em}
+    \end{itemize}
+    
+    \item \textbf{Hạn chế:} Mô hình vẫn có sai sót trong việc phân loại các biểu cảm có biểu hiện gần nhau (như \textit{fear} và \textit{surprise}), đặc biệt trên ảnh nhiễu hoặc biểu cảm mờ.
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+% \begin{frame}{Hướng phát triển}
+% \begin{itemize}
+%     \item Tối ưu mô hình để chạy tốt hơn trên thiết bị di động hoặc hệ thống nhúng.
+%     \vspace{0.5em}
+%     \item Mở rộng dữ liệu huấn luyện đa dạng về \textbf{văn hoá}, \textbf{giới tính}, \textbf{độ tuổi}.
+%     \vspace{0.5em}
+%     \item Ứng dụng trong các lĩnh vực:
+%     \vspace{0.5em}
+%     \begin{itemize}
+%         \item Hỗ trợ tâm lý, chăm sóc sức khoẻ tinh thần.
+%         \vspace{0.5em}
+%         \item Giao tiếp người–máy (HCI).
+%         \vspace{0.5em}
+%     \end{itemize}
+%     \item Thử nghiệm các kiến trúc nhẹ: 
+%     \vspace{0.5em}
+%     \textbf{EfficientFormer}, \textbf{MobileViT}, \textbf{EdgeNeXt}.
+%     \item Tích hợp tín hiệu đa modal: \textbf{giọng nói}, \textbf{cử chỉ}, \textbf{văn bản}.
+% \end{itemize}
+% \end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Demo}
+% \begin{itemize}
+%     \item Sử dụng \textbf{MTCNN} để phát hiện khuôn mặt trên từng khung hình.
+%     \vspace{0.5em}
+%     \item Khuôn mặt được \textbf{resize về 224×224}, chuẩn hóa theo thống kê ImageNet, sau đó đưa vào mô hình.
+%     \vspace{0.5em}
+%     \item Mô hình được \textbf{huấn luyện trước trên FER2013} nên có khả năng nhận diện tốt các cảm xúc như \textit{happy}, \textit{sad}, \textit{angry}, \textit{fear}.
+%     \vspace{0.5em}
+%     \item Nhãn cảm xúc được hiển thị trực tiếp trên ảnh cùng với \textit{bounding box}.
+% \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Tài liệu tham khảo (1/2)}
+ \small
+\begin{thebibliography}{99}
+
+\bibitem{goodfellow2013}
+I. Goodfellow et al., \textit{Challenges in Representation Learning: A Report on Three Machine Learning Contests}, ICONIP, 2013.
+
+\bibitem{mollahosseini2017}
+A. Mollahosseini et al., \textit{AffectNet: A Database for Facial Expression, Valence, and Arousal Computing in the Wild}, IEEE TAC, 2017.
+
+\bibitem{liu2021}
+Z. Liu et al., \textit{Swin Transformer: Hierarchical Vision Transformer Using Shifted Windows}, ICCV, 2021.
+
+\bibitem{bie2024swinfer}
+M. Bie et al., \textit{Swin-FER: Swin Transformer for Facial Expression Recognition}, Applied Sciences, 2024.
+
+\bibitem{ma2021}
+F. Ma et al., \textit{Facial Expression Recognition with Visual Transformers and Attentional Selective Fusion}, IEEE TAC, 2021.
+
+\bibitem{alamsyah2020}
+D. Alamsyah and D. Pratama, \textit{Implementasi CNN untuk Klasifikasi Ekspresi Wajah trên FER-2013}, Jurnal Teknologi Informasi, 2020.
+
+\end{thebibliography}
+\end{frame}
+
+%-------------------------------------
+
+\begin{frame}{Tài liệu tham khảo (2/2)}
+\small
+
+\begin{thebibliography}{99}
+
+\bibitem{xue2021}
+F. Xue et al., \textit{TransFER: Learning Relation-Aware Facial Expression Representations with Transformers}, ICCV, 2021.
+
+\bibitem{vats2023swinse}
+A. Vats and A. Chadha, \textit{Facial Expression Recognition Using SE-Powered Swin Transformers}, arXiv:2301.10906, 2023.
+
+\bibitem{liang2023ctdbn}
+X. Liang et al., \textit{A Convolution–Transformer Dual Branch Network for Facial Expression Recognition}, The Visual Computer, 2023.
+
+\bibitem{hu2018squeeze}
+J. Hu et al., \textit{Squeeze-and-Excitation Networks}, CVPR, 2018.
+
+\bibitem{nie2022}
+H. Nie, \textit{Face Expression Classification Using SE-based VGG16}, ICCECE, 2022.
+
+\bibitem{he2016deep}
+K. He, X. Zhang, S. Ren, and J. Sun, \textit{Deep Residual Learning for Image Recognition}, in Proc. IEEE Conf. on Computer Vision and Pattern Recognition (CVPR), 2016, pp. 770–778.
+
+
+\end{thebibliography}
+\end{frame}
+
+%-------------------------------------
+
+\end{document}

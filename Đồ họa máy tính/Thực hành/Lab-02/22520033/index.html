@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>22520033 - Lab-02</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="webglCanvas" width="1000" height="700"></canvas>
+    
+    <div id="controls">
+        <div class="control-row">
+            <label for="objectSelect">Chọn đối tượng:</label>
+            <select id="objectSelect">
+                <option value="both">An</option>
+                <option value="A">Chữ A</option>
+                <option value="N">Chữ n</option>
+            </select>
+        </div>
+        
+        <button id="autoMove">Tự động di chuyển</button>
+        <button id="autoRotate">Tự động quay</button>
+
+        <div class="control-row">
+            <label for="translateX">x</label>
+            <input type="range" id="translateX" min="-1" max="1" step="0.01" value="0">
+            <span id="valTranslateX">0</span>
+        </div>
+    
+        <div class="control-row">
+            <label for="translateY">y</label>
+            <input type="range" id="translateY" min="-1" max="1" step="0.01" value="0">
+            <span id="valTranslateY">150</span>
+        </div>
+    
+        <div class="control-row">
+            <label for="angle">angle</label>
+            <input type="range" id="angle" min="-180" max="180" step="1" value="0">
+            <span id="valAngle">0</span>
+        </div>
+    
+        <div class="control-row">
+            <label for="scaleX">scaleX</label>
+            <input type="range" id="scaleX" min="0.1" max="2" step="0.1" value="1">
+            <span id="valScaleX">1.00</span>
+        </div>
+    
+        <div class="control-row">
+            <label for="scaleY">scaleY</label>
+            <input type="range" id="scaleY" min="0.1" max="2" step="0.1" value="1">
+            <span id="valScaleY">1.00</span>
+        </div>
+
+        <button id="reset">Reset</button>
+
+    </div>
+    
+    <script src="main.js"></script>
+
+</body>
+</html>

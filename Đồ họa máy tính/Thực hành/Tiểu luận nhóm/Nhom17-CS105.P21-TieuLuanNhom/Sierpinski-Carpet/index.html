@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sierpinski Carpet WebGL</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="glCanvas"></canvas>
+    <div id="uiContainer">
+        <label for="depthSlider">Depth: <span id="depthValue">1</span></label>
+        <input type="range" id="depthSlider" min="0" max="7" value="1" step="1">
+
+        <hr>
+
+        <button id="animateButton">Animate</button>
+        <button id="resetButton">Reset</button>
+    </div>
+
+    <script src="webgl-utils.js"></script>
+    <script src="Sierpinski-Carpet.js"></script>
+</body>
+</html>

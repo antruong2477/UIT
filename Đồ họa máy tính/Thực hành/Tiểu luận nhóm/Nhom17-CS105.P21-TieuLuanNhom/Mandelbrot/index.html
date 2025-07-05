@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fractal WebGL</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="glCanvas"></canvas>
+    <div id="uiContainer">
+        <label for="iterSlider">Max Iterations: <span id="iterValue">100</span></label>
+        <input type="range" id="iterSlider" min="10" max="1000" value="100" step="10">
+
+        <hr>
+
+        <button id="animateButton">Animate Color</button>
+        <button id="resetButton">Reset View</button>
+    </div>
+
+    <script src="webgl-utils.js"></script>
+    <script src="Mandelbrot.js"></script>
+</body>
+</html>

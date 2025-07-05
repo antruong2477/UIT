@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>22520084 - Bài tập 3: Đường cong</title>
+  <link rel="stylesheet" href="webgl-tutorials.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7f6;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 40px;
+      color: #333;
+    }
+    .container {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+    }
+    .canvas-container {
+      width: 65%;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      overflow: hidden;
+    }
+    canvas {
+      width: 100%;
+      height: 500px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+    .control-panel {
+      width: 30%;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    .tab-container {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 15px;
+    }
+    .tab {
+      padding: 12px 20px;
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .tab:hover {
+      background-color: #ddd;
+    }
+    .tab.active {
+      background-color: #f0f0f0;
+      font-weight: bold;
+      border-bottom: 3px solid #007bff;
+    }
+    .tab-content {
+      display: none;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 8px;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    input[type="text"], input[type="number"], textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      width: 100%;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    label {
+      font-size: 14px;
+      margin-bottom: 5px;
+      display: block;
+    }
+  </style>
+</head>
+<body>  
+  <div class="container">
+    <!-- Canvas -->
+    <div class="canvas-container">
+      <canvas id="canvas"></canvas>
+    </div>
+    
+    <!-- Control Panel -->
+    <div class="control-panel">
+      <!-- Tab Buttons -->
+      <div class="tab-container">
+        <div class="tab active" data-tab="function">Hàm số</div>
+        <div class="tab" data-tab="bezier">Bezier</div>
+        <div class="tab" data-tab="hermit">Hermit</div>
+        <div class="tab" data-tab="flower">Vẽ hoa</div>
+      </div>
+
+      <!-- Function Graph Tab -->
+      <div id="function" class="tab-content active">
+        <h3>1. Vẽ đồ thị hàm số y = f(x)</h3>
+        <div>
+          <label for="func-expression">f(x) = </label>
+          <input type="text" id="func-expression" value="sin(x)">
+        </div>
+        <div>
+          <label for="range-min">Min:</label>
+          <input type="number" id="range-min" value="-5" step="0.5">
+          <label for="range-max">Max:</label>
+          <input type="number" id="range-max" value="5" step="0.5">
+        </div>
+        <button id="draw-function">Vẽ đồ thị</button>
+      </div>
+      
+      <!-- Bezier Tab -->
+      <div id="bezier" class="tab-content">
+        <h3>2. Đường cong Bezier</h3>
+        <div>
+          <p>Nhập các điểm điều khiển (x,y):</p>
+          <textarea id="bezier-points" rows="4">5,2&#10;1,1&#10;3,1</textarea>
+          </textarea>
+        </div>
+        <button id="draw-bezier">Vẽ đường cong</button>
+      </div>
+      
+      <!-- Hermit Tab -->
+      <div id="hermit" class="tab-content">
+        <h3>3. Đường cong Hermit</h3>
+        <div>
+          <label>Điểm 1 (x,y):</label>
+          <input type="number" id="p1-x" value="2" step="0.5">
+          <input type="number" id="p1-y" value="5" step="0.5">
+          
+          <label>Điểm 2 (x,y):</label>
+          <input type="number" id="p2-x" value="7" step="0.5">
+          <input type="number" id="p2-y" value="3" step="0.5">
+          
+          <label>Vector 1 (x,y):</label>
+          <input type="number" id="v1-x" value="2" step="0.5">
+          <input type="number" id="v1-y" value="1" step="0.5">
+          
+          <label>Vector 2 (x,y):</label>
+          <input type="number" id="v2-x" value="-3" step="0.5">
+          <input type="number" id="v2-y" value="-2" step="0.5">
+        </div>
+        <button id="draw-hermit">Vẽ đường cong</button>
+      </div>
+      
+      <!-- Flower Tab -->
+      <div id="flower" class="tab-content">
+        <h3>4. Cánh hoa</h3>
+        <label for="petal-count">Số cánh hoa:</label>
+        <input type="number" id="petal-count" value="5" min="1" max="20" step="1">
+        <button id="draw-flower">Vẽ cánh hoa</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="webgl-utils.js"></script>
+  <script src="webgl-lessons-ui.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

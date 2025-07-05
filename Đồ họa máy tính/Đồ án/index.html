@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Game FPS</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js",
+                "three/examples/jsm/controls/PointerLockControls.js": "https://cdn.jsdelivr.net/npm/three@latest/examples/jsm/controls/PointerLockControls.js"
+            }
+        }
+    </script>
+</head>
+<body>
+    <button id="startButton">Click để bắt đầu</button>
+    <script type="module" src="game.js"></script>
+
+    <div id="hud">
+        <div id="healthBarContainer">
+            <div id="healthBar"></div>
+        </div>
+        <div id="score">Score: 0</div>
+    </div>
+
+</body>
+</html>

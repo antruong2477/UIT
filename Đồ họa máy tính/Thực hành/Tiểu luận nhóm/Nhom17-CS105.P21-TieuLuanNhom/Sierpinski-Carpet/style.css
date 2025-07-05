@@ -1,0 +1,70 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #0e0e11;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+#glCanvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+}
+
+#uiContainer {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #e0e0e0;
+    background-color: rgba(22, 24, 30, 0.95);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    max-width: 320px;
+}
+
+#uiContainer label {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #cfcfcf;
+    display: block;
+}
+
+#uiContainer span {
+    font-weight: bold;
+    color: #64ffda;
+    display: inline-block;
+    min-width: 30px;
+}
+
+#uiContainer input[type="range"] {
+    width: 100%;
+    margin-bottom: 10px;
+    cursor: pointer;
+    accent-color: #64ffda;
+}
+
+#uiContainer button {
+    padding: 6px 12px;
+    background-color: #263238;
+    color: #a5f2e9;
+    border: 1px solid #35585c;
+    border-radius: 6px;
+    font-weight: 500;
+    margin-right: 6px;
+    transition: all 0.2s ease;
+    margin-top: 6px;
+}
+
+#uiContainer button:hover {
+    background-color: #35585c;
+    color: #ffffff;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 12px 0;
+}
